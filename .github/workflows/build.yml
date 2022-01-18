@@ -49,7 +49,7 @@ jobs:
           publish: false
           prerelease: false
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
 
       - name: Update version in build.gradle
         run: |
