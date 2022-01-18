@@ -9,7 +9,7 @@
 
 plugins {
     // Apply the application plugin to add support for building a CLI application in Java.
-    id 'java'
+    id 'application'
 }
 
 repositories {
@@ -17,7 +17,7 @@ repositories {
     mavenCentral()
 }
 
-version = '1.0.0'
+version = '0.0.1'
 
 dependencies {
     // This dependency is used by the application.
@@ -36,9 +36,6 @@ testing {
     }
 }
 
-jar {
-    manifest {
-        // Define the main class for the application.
-        attributes 'Main-Class': 'com.dex.midi.Driver'
-    }
+application {
+    mainClass = 'com.dex.midi.Driver'
 }

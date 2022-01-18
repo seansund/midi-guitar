@@ -58,6 +58,8 @@ jobs:
           sed -E "s/version = '(.*)'/version = '${{ steps.create-release.outputs.tag_name }}'/g" build.gradle > build.gradle.new
           cp build.gradle.new build.gradle
           rm build.gradle.new
+          git add build.gradle
+          git commit -m "Updates module version to ${{ steps.create-release.outputs.tag_name }}"
 
       - name: Push changes
         uses: ad-m/github-push-action@master
