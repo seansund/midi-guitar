@@ -9,4 +9,3 @@
  */
 
 rootProject.name = 'midi-guitar'
-include('app')
