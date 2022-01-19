@@ -1,6 +1,12 @@
 package com.dex.midi.util;
 
 import java.util.*;
+import java.util.function.BiConsumer;
+import java.util.function.BinaryOperator;
+import java.util.function.Function;
+import java.util.function.Supplier;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 public class CountingSet<E> implements Set<E> {
 	
@@ -24,6 +30,39 @@ public class CountingSet<E> implements Set<E> {
 			addAll(c);
 		}
 	}
+
+	public static <T> Collector<T, ?, Set<T>> collector() {
+		return new Collector<T, CountingSet<T>, Set<T>>() {
+			@Override
+			public Supplier<CountingSet<T>> supplier() {
+				return CountingSet::new;
+			}
+
+			@Override
+			public BiConsumer<CountingSet<T>, T> accumulator() {
+				return (set, value) -> set.add(value);
+			}
+
+			@Override
+			public BinaryOperator<CountingSet<T>> combiner() {
+				return (set1, set2) -> {
+					set1.addAll(set2);
+					return set1;
+				};
+			}
+
+			@Override
+			public Function<CountingSet<T>, Set<T>> finisher() {
+				return CountingSet::new;
+			}
+
+			@Override
+			public Set<Characteristics> characteristics() {
+				return Set.of(Characteristics.UNORDERED);
+			}
+		};
+	}
+
 
 	@Override
 	public boolean add(E val) {
