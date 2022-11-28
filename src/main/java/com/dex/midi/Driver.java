@@ -1,5 +1,6 @@
 package com.dex.midi;
 
+import com.dex.midi.event.ListenerMidiEventProducer;
 import com.dex.midi.event.MidiEventException;
 import com.dex.midi.event.MidiEventProducer;
 import com.dex.midi.handler.PrintMidiEventListener;
@@ -40,11 +41,11 @@ public class Driver {
 		return receiver;
 	}
 	
-	public MidiEventProducer getMidiEventProducer() {
+	public ListenerMidiEventProducer getMidiEventProducer() {
 		return getReceiver().getMidiEventProducer();
 	}
 	
-	protected void init(MidiEventProducer p) throws MidiEventException {
+	protected void init(ListenerMidiEventProducer p) throws MidiEventException {
 		// nothing to do
 	}
 	
