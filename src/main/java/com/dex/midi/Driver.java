@@ -79,7 +79,7 @@ public class Driver {
 				line = in.readLine();
 			}
 		} catch (MidiUnavailableException e) {
-			SimpleLogger.log(Level.SEVERE, this, method, "Midi resources unvailable", e);
+			SimpleLogger.log(Level.SEVERE, this, method, "Midi resources unavailable", e);
 		} catch (IOException e) {
 			SimpleLogger.log(Level.SEVERE, this, method, "Input stream error", e);
 		} catch (MidiEventException e) {
