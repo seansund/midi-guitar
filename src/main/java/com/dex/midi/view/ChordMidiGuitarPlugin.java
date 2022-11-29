@@ -70,6 +70,9 @@ public class ChordMidiGuitarPlugin extends AbstractMidiGuitarPlugin<JComponent> 
 			label.setText(text);
 			label.repaint();
 		}
+
+		public void close() {
+		}
 	}
 
 }

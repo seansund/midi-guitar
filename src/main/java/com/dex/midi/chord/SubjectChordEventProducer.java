@@ -17,4 +17,9 @@ public class SubjectChordEventProducer implements ChordEventProducer {
     public void fireChordChange(List<Chord> chords) {
         subject.onNext(chords);
     }
+
+    @Override
+    public void close() {
+        subject.onComplete();
+    }
 }
