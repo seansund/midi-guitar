@@ -1,5 +1,6 @@
 package com.dex.midi;
 
+import com.dex.midi.event.ListenerMidiEventProducer;
 import com.dex.midi.event.MidiEventProducer;
 import com.dex.midi.event.PitchEvent;
 import com.dex.midi.event.PitchEvent.Type;
@@ -17,7 +18,7 @@ public class MidiGuitarReceiver implements Receiver {
 	// 01111111
 	private static final int MASK = 0x007f;
 	
-	private MidiEventProducer p = null;
+	private ListenerMidiEventProducer p = null;
 	
 	// TODO get from configuration
 	private MidiConfig config = null;
@@ -167,7 +168,7 @@ public class MidiGuitarReceiver implements Receiver {
 		SimpleLogger.log(Level.INFO, this, method, "MetaMessage: {0}", msg);
 	}
 	
-	public MidiEventProducer getMidiEventProducer() {
+	public ListenerMidiEventProducer getMidiEventProducer() {
 		return p;
 	}
 }

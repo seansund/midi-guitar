@@ -4,7 +4,7 @@ import com.dex.midi.event.AbstractEventProducer;
 
 import java.util.List;
 
-public class SimpleChordEventProducer extends AbstractEventProducer<ChordEventListener> implements ChordEventProducer {
+public class SimpleChordEventProducer extends AbstractEventProducer<ChordEventListener> implements ListenerChordEventProducer {
 
 	@Override
 	public void addChordEventListener(ChordEventListener l) {

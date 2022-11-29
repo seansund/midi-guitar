@@ -1,6 +1,6 @@
 package com.dex.midi;
 
-import com.dex.midi.event.MidiEventProducer;
+import com.dex.midi.event.ListenerMidiEventProducer;
 import com.dex.midi.event.SimpleMidiEventProducer;
 import com.dex.midi.model.Note;
 import com.dex.midi.model.Pitch;
@@ -67,7 +67,7 @@ public class MidiConfig {
 	public void setBendCountThreshold(int bendCountThreshold) {
 		this.bendCountThreshold = bendCountThreshold;
 	}
-	public MidiEventProducer getProducer() {
+	public ListenerMidiEventProducer getProducer() {
 		return SimpleMidiEventProducer.getInstance();
 	}
 	public int getChannelOffset() {

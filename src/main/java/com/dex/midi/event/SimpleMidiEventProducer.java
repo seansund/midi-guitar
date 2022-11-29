@@ -6,15 +6,15 @@ import java.util.logging.Level;
 
 
 public class SimpleMidiEventProducer extends AbstractEventProducer<MidiEventListener> implements
-		MidiEventProducer {
+		ListenerMidiEventProducer {
 	
-	private static MidiEventProducer instance = null;
+	private static ListenerMidiEventProducer instance = null;
 	
 	protected SimpleMidiEventProducer() {
 		super();
 	}
 	
-	public static MidiEventProducer getInstance() {
+	public static ListenerMidiEventProducer getInstance() {
 		if (instance == null) {
 			instance = new SimpleMidiEventProducer();
 		}
@@ -34,7 +34,7 @@ public class SimpleMidiEventProducer extends AbstractEventProducer<MidiEventList
 	public void removeMidiEventListener(MidiEventListener l) {
 		super.removeListener(l);
 	}
-	
+
 	@Override
 	public void fireNoteOn(PitchEvent e) {
 		for (MidiEventListener l : iterate()) {
@@ -65,7 +65,9 @@ public class SimpleMidiEventProducer extends AbstractEventProducer<MidiEventList
 
 	@Override
 	public void mergeProducers(MidiEventProducer that) {
-		addAllListeners(that.getListeners());
+		if (that instanceof ListenerMidiEventProducer) {
+			addAllListeners(((ListenerMidiEventProducer)that).getListeners());
+		}
 	}
 
 }

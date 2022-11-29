@@ -18,7 +18,7 @@ public class ChordMidiGuitarPlugin extends AbstractMidiGuitarPlugin<JComponent> 
 
 	private Collection<JComponent> c;
 	private JLabel label;
-	private ChordEventProducer p = new SimpleChordEventProducer();
+	final private ListenerChordEventProducer p = new SimpleChordEventProducer();
 	
 	public ChordMidiGuitarPlugin() {
 		super(DEFAULT_TITLE);
@@ -64,7 +64,7 @@ public class ChordMidiGuitarPlugin extends AbstractMidiGuitarPlugin<JComponent> 
 			}
 
 			final String text = chords.stream()
-					.map(c -> c.toString())
+					.map(Chord::toString)
 					.collect(Collectors.joining(","));
 
 			label.setText(text);
