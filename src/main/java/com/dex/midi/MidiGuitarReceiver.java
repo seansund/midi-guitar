@@ -18,7 +18,7 @@ public class MidiGuitarReceiver implements Receiver {
 	// 01111111
 	private static final int MASK = 0x007f;
 	
-	private ListenerMidiEventProducer p = null;
+	private MidiEventProducer p = null;
 	
 	// TODO get from configuration
 	private MidiConfig config = null;
@@ -168,7 +168,7 @@ public class MidiGuitarReceiver implements Receiver {
 		SimpleLogger.log(Level.INFO, this, method, "MetaMessage: {0}", msg);
 	}
 	
-	public ListenerMidiEventProducer getMidiEventProducer() {
+	public MidiEventProducer getMidiEventProducer() {
 		return p;
 	}
 }
