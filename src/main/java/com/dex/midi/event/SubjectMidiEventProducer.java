@@ -3,7 +3,7 @@ package com.dex.midi.event;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.subjects.PublishSubject;
 
-public class SubjectMidiEventProducer implements MidiEventProducer {
+public class SubjectMidiEventProducer implements MidiEventProducer, MidiEventObservable {
 
     private PublishSubject<PitchEvent> noteOnSubject = PublishSubject.create();
     private PublishSubject<PitchEvent> noteOffSubject = PublishSubject.create();
@@ -20,14 +20,17 @@ public class SubjectMidiEventProducer implements MidiEventProducer {
         }
     }
 
+    @Override
     public Observable<PitchEvent> getNoteOnObservable() {
         return noteOnSubject;
     }
 
+    @Override
     public Observable<PitchEvent> getNoteOffObservable() {
         return noteOffSubject;
     }
 
+    @Override
     public Observable<PitchBendEvent> getPitchBendObservable() {
         return pitchBendSubject;
     }
