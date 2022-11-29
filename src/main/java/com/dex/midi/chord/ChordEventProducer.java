@@ -5,4 +5,6 @@ import java.util.List;
 public interface ChordEventProducer {
 
 	public void fireChordChange(List<Chord> chords);
+
+	public void close();
 }
