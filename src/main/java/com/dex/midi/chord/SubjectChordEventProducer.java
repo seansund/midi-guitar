@@ -5,10 +5,11 @@ import io.reactivex.rxjava3.subjects.PublishSubject;
 
 import java.util.List;
 
-public class SubjectChordEventProducer implements ChordEventProducer {
+public class SubjectChordEventProducer implements ChordEventProducer, ChordEventObservable {
 
     final private PublishSubject<List<Chord>> subject = PublishSubject.create();
 
+    @Override
     public Observable<List<Chord>> getObservable() {
         return subject;
     }
