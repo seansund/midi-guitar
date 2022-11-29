@@ -2,7 +2,7 @@ package com.dex.midi;
 
 import com.dex.midi.event.ListenerMidiEventProducer;
 import com.dex.midi.event.MidiEventException;
-import com.dex.midi.event.MidiEventProducer;
+import com.dex.midi.event.SimpleMidiEventProducer;
 import com.dex.midi.handler.PrintMidiEventListener;
 import com.dex.midi.util.SimpleLogger;
 
@@ -29,22 +29,26 @@ public class Driver {
 		}
 		return instance;
 	}
-	
+
+	public ListenerMidiEventProducer getMidiEventProducer() {
+		return SimpleMidiEventProducer.getInstance();
+	}
+
+	public MidiConfig getMidiConfig() {
+		return new MidiConfig(getMidiEventProducer());
+	}
+
 	public Transmitter getTransmitter() throws MidiUnavailableException {
 		return MidiSystem.getTransmitter();
 	}
 	
 	public MidiGuitarReceiver getReceiver() {
 		if (receiver == null) {
-			receiver = new MidiGuitarReceiver();
+			receiver = new MidiGuitarReceiver(getMidiConfig());
 		}
 		return receiver;
 	}
-	
-	public ListenerMidiEventProducer getMidiEventProducer() {
-		return getReceiver().getMidiEventProducer();
-	}
-	
+
 	protected void init(ListenerMidiEventProducer p) throws MidiEventException {
 		// nothing to do
 	}

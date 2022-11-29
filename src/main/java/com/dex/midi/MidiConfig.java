@@ -1,6 +1,7 @@
 package com.dex.midi;
 
 import com.dex.midi.event.ListenerMidiEventProducer;
+import com.dex.midi.event.MidiEventProducer;
 import com.dex.midi.event.SimpleMidiEventProducer;
 import com.dex.midi.model.Note;
 import com.dex.midi.model.Pitch;
@@ -13,6 +14,8 @@ public class MidiConfig {
 	public static final double STDDEV_THRESHOLD = 15.0;
 	
 	private static MidiConfig instance = null;
+
+	private MidiEventProducer p = null;
 	
 	private final Note[] baseOpenNotes = new Note[] { Note.E, Note.B, Note.G, Note.D, Note.A, Note.E };
 	private final Pitch[] baseOpenPitches = new Pitch[] { new Pitch(Note.E, 4), new Pitch(Note.B, 3), new Pitch(Note.G, 3), new Pitch(Note.D, 3), new Pitch(Note.A, 2), new Pitch(Note.E, 2) };
@@ -26,11 +29,16 @@ public class MidiConfig {
 	private Note[] openNotes = null;
 	private Pitch[] openPitches = null;
 	private int keyIndex = 0;
-	
+
 	public MidiConfig() {
-		super();
+		this(SimpleMidiEventProducer.getInstance());
 	}
-	
+
+	public MidiConfig(MidiEventProducer p) {
+		super();
+		this.p = p;
+	}
+
 	public static MidiConfig getInstance() {
 		if (instance == null) {
 			instance = new MidiConfig();
@@ -67,8 +75,8 @@ public class MidiConfig {
 	public void setBendCountThreshold(int bendCountThreshold) {
 		this.bendCountThreshold = bendCountThreshold;
 	}
-	public ListenerMidiEventProducer getProducer() {
-		return SimpleMidiEventProducer.getInstance();
+	public MidiEventProducer getProducer() {
+		return p;
 	}
 	public int getChannelOffset() {
 		return channelOffset;
