@@ -3,6 +3,7 @@ package com.dex.midi.handler;
 import com.dex.midi.event.MidiEventListener;
 import com.dex.midi.event.PitchBendEvent;
 import com.dex.midi.event.PitchEvent;
+import com.dex.midi.model.GuitarPosition;
 import com.dex.midi.util.StringFormat;
 import com.dex.midi.util.StringUtil;
 
@@ -31,7 +32,12 @@ public class PrintMidiEventListener implements MidiEventListener {
 		// TODO Auto-generated method stub
 
 	}
-	
+
+	@Override
+	public void guitarPositions(GuitarPosition[] positions) {
+		// TODO
+	}
+
 	protected void print(int stringIndex) {
 		StringBuffer buf = new StringBuffer(80);
 		buf.append(StringUtil.PIPE);

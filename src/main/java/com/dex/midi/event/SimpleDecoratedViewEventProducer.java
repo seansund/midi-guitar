@@ -1,30 +1,49 @@
 package com.dex.midi.event;
 
 import com.dex.midi.view.DecoratedView;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.subjects.BehaviorSubject;
 
-public class SimpleDecoratedViewEventProducer<T> extends AbstractEventProducer<DecoratedViewEventListener<T>> 
-		implements DecoratedViewEventProducer<T> {
+public class SimpleDecoratedViewEventProducer<T> extends AbstractEventObservable<DecoratedViewEventListener<T>> implements DecoratedViewEventListenerSource<T>, DecoratedViewEventObservableSource<T> {
 
-	@Override
-	public void addDecoratedViewEventListener(DecoratedViewEventListener<T> l) {
-		super.addListener(l);
-	}
+    private static SimpleDecoratedViewEventProducer instance;
 
-	@Override
-	public void removeDecoratedViewEventListener(DecoratedViewEventListener<T> l) {
-		super.removeListener(l);
-	}
-	
-	@Override
-	public void fireDecoratedViewEvent(DecoratedView<T> v) {
-		for (DecoratedViewEventListener<T> l : iterate()) {
-			l.decoratedViewChanged(v);
-		}
-	}
-	
-	@Override
-	public void mergeProducers(DecoratedViewEventProducer<T> p) {
-		addAllListeners(p.getListeners());
-	}
+    private final BehaviorSubject<DecoratedView<T>> subject = BehaviorSubject.create();
 
+    public static SimpleDecoratedViewEventProducer getInstance() {
+        if (instance != null) {
+            return instance;
+        }
+
+        return instance = new SimpleDecoratedViewEventProducer<>();
+    }
+
+    @Override
+    public void addDecoratedViewEventListener(DecoratedViewEventListener<T> l) {
+        registerListener(subject, l, l::decoratedViewChanged);
+    }
+
+    @Override
+    public void removeDecoratedViewEventListener(DecoratedViewEventListener<T> l) {
+        dispose(l);
+    }
+
+    @Override
+    public Observable<DecoratedView<T>> getObservable() {
+        return subject;
+    }
+
+    @Override
+    public void mergeProducers(DecoratedViewEventProducer<T> that) {
+        if (that instanceof SimpleDecoratedViewEventProducer) {
+            final SimpleDecoratedViewEventProducer<T> thatP = (SimpleDecoratedViewEventProducer<T>) that;
+
+            subject.subscribe(thatP.subject);
+        }
+    }
+
+    @Override
+    public void fireDecoratedViewEvent(DecoratedView<T> v) {
+        subject.onNext(v);
+    }
 }
