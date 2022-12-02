@@ -3,6 +3,7 @@ package com.dex.midi.chord;
 import com.dex.midi.event.MidiEventListener;
 import com.dex.midi.event.PitchBendEvent;
 import com.dex.midi.event.PitchEvent;
+import com.dex.midi.model.GuitarPosition;
 
 import java.util.HashSet;
 import java.util.List;
@@ -40,7 +41,12 @@ public class MidiChordListener implements MidiEventListener {
 	public void pitchBend(PitchBendEvent e) {
 		// nothing to do
 	}
-	
+
+	@Override
+	public void guitarPositions(GuitarPosition[] positions) {
+		// TODO
+	}
+
 	@Override
 	public void close() {
 		// nothing to do

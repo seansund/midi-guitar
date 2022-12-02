@@ -20,10 +20,8 @@ public class CompoundDecorator<T> implements Decorator<T> {
 	@Override
 	public void decorate(T c) {
 		this.defaultDecorator.decorate(c);
-		
-		for (Decorator<T> d : children) {
-			d.decorate(c);
-		}
+
+		children.forEach((Decorator<T> d) -> d.decorate(c));
 	}
 	
 }

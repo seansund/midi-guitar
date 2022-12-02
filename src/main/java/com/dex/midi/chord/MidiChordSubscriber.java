@@ -1,9 +1,7 @@
 package com.dex.midi.chord;
 
 import com.dex.midi.event.MidiEventObservable;
-import com.dex.midi.event.MidiEventProducer;
 import com.dex.midi.event.PitchEvent;
-import com.dex.midi.event.SubjectMidiEventProducer;
 
 import java.util.HashSet;
 import java.util.List;

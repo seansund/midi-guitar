@@ -18,7 +18,7 @@ public class ChordMidiGuitarPlugin extends AbstractMidiGuitarPlugin<JComponent> 
 
 	private Collection<JComponent> c;
 	private JLabel label;
-	final private ListenerChordEventProducer p = new SimpleChordEventProducer();
+	final private ChordEventListenerSource p = new SimpleChordEventProducer();
 	
 	public ChordMidiGuitarPlugin() {
 		super(DEFAULT_TITLE);

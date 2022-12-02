@@ -74,7 +74,7 @@ public abstract class AbstractMidiGuitarPlugin<T> implements MidiGuitarPlugin<T>
 	}
 
 	@Override
-	public ListenerMidiEventProducer getMidiEventProducer() {
+	public MidiEventListenerSource getMidiEventProducer() {
 		return SimpleMidiEventProducer.getInstance();
 	}
 	

@@ -1,6 +1,5 @@
 package com.dex.midi;
 
-import com.dex.midi.event.ListenerMidiEventProducer;
 import com.dex.midi.event.MidiEventProducer;
 import com.dex.midi.event.SimpleMidiEventProducer;
 import com.dex.midi.model.Note;
