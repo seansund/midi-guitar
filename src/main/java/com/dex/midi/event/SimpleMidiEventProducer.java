@@ -2,6 +2,7 @@ package com.dex.midi.event;
 
 import com.dex.midi.event.util.Disposables;
 import com.dex.midi.model.GuitarPosition;
+import com.dex.midi.model.GuitarPositions;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.subjects.BehaviorSubject;
@@ -12,14 +13,14 @@ public class SimpleMidiEventProducer implements MidiEventObservableSource, MidiE
 
     private static SimpleMidiEventProducer instance;
 
-    private Map<MidiEventListener, Disposable> listeners = new HashMap<>();
+    private final Map<MidiEventListener, Disposable> listeners = new HashMap<>();
 
-    private BehaviorSubject<PitchEvent> noteOnSubject = BehaviorSubject.create();
-    private BehaviorSubject<PitchEvent> noteOffSubject = BehaviorSubject.create();
-    private BehaviorSubject<PitchBendEvent> pitchBendSubject = BehaviorSubject.create();
-    private BehaviorSubject<GuitarPosition[]> guitarPositionSubject = BehaviorSubject.create();
+    private final BehaviorSubject<PitchEvent> noteOnSubject = BehaviorSubject.create();
+    private final BehaviorSubject<PitchEvent> noteOffSubject = BehaviorSubject.create();
+    private final BehaviorSubject<PitchBendEvent> pitchBendSubject = BehaviorSubject.create();
+    private final BehaviorSubject<GuitarPositions> guitarPositionSubject = BehaviorSubject.create();
 
-    private GuitarPosition[] positions = new GuitarPosition[6];
+    private final GuitarPositions positions = new GuitarPositions();
 
     public static SimpleMidiEventProducer getInstance() {
         if (instance != null) {
@@ -57,13 +58,13 @@ public class SimpleMidiEventProducer implements MidiEventObservableSource, MidiE
     }
 
     @Override
-    public Observable<GuitarPosition[]> getGuitarPositionObservable() {
+    public Observable<GuitarPositions> getGuitarPositionObservable() {
         return guitarPositionSubject;
     }
 
     @Override
     public void fireNoteOn(PitchEvent e) {
-        positions[e.getStringIndex()] = e.getGuitarFret();
+        positions.setPosition(e.getStringIndex(), e.getGuitarFret());
 
         noteOnSubject.onNext(e);
 
@@ -72,7 +73,7 @@ public class SimpleMidiEventProducer implements MidiEventObservableSource, MidiE
 
     @Override
     public void fireNoteOff(PitchEvent e) {
-        positions[e.getStringIndex()] = null;
+        positions.setPosition(e.getStringIndex(), null);
 
         noteOffSubject.onNext(e);
 
@@ -85,7 +86,7 @@ public class SimpleMidiEventProducer implements MidiEventObservableSource, MidiE
     }
 
     @Override
-    public void fireGuitarPositions(GuitarPosition[] e) {
+    public void fireGuitarPositions(GuitarPositions e) {
         guitarPositionSubject.onNext(e);
     }
 

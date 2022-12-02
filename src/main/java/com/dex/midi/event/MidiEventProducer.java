@@ -1,8 +1,6 @@
 package com.dex.midi.event;
 
-import com.dex.midi.model.GuitarPosition;
-
-import java.util.Collection;
+import com.dex.midi.model.GuitarPositions;
 
 public interface MidiEventProducer {
 
@@ -14,7 +12,7 @@ public interface MidiEventProducer {
 	
 	public void firePitchBend(PitchBendEvent e);
 
-	public void fireGuitarPositions(GuitarPosition[] positions);
+	public void fireGuitarPositions(GuitarPositions positions);
 
 	public void close();
 }

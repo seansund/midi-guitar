@@ -1,7 +1,7 @@
 package com.dex.midi.event;
 
 
-import com.dex.midi.model.GuitarPosition;
+import com.dex.midi.model.GuitarPositions;
 
 public interface MidiEventListener {
 	
@@ -11,7 +11,7 @@ public interface MidiEventListener {
 	
 	public void pitchBend(PitchBendEvent e);
 
-	public void guitarPositions(GuitarPosition[] positions);
+	public void guitarPositions(GuitarPositions positions);
 	
 	public void close();
 }
