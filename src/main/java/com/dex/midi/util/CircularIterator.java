@@ -6,7 +6,7 @@ import java.util.List;
 
 public class CircularIterator<E> implements Iterator<E> {
 
-	private List<E> list;
+	final private List<E> list;
 	private int startIndex;
 	private int currentIndex;
 	

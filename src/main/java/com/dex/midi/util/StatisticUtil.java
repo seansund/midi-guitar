@@ -8,10 +8,10 @@ public class StatisticUtil {
 		int total = 0;
 		
 		for (Integer i : list) {
-			total += i.intValue();
+			total += i;
 		}
 		
-		return total/list.size();
+		return (double) total / list.size();
 	}
 	
 	public static double standardDeviation(List<Integer> list) {
@@ -20,10 +20,10 @@ public class StatisticUtil {
 	
 	public static double standardDeviation(List<Integer> list, Double mean) {
 		if (mean == null) {
-			mean = Double.valueOf(StatisticUtil.mean(list));
+			mean = StatisticUtil.mean(list);
 		}
 		
-		double avg = mean.doubleValue();
+		double avg = mean;
 		
 		double diff = 0.0;
 		for (Integer i : list) {
