@@ -7,6 +7,7 @@ import com.dex.midi.util.SimpleLogger;
 import java.util.List;
 import java.util.logging.Level;
 
+@Deprecated
 public class ChordDriver extends com.dex.midi.Driver implements ChordEventListener {
 
 	@Override
