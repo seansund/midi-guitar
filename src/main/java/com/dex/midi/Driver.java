@@ -2,6 +2,7 @@ package com.dex.midi;
 
 import com.dex.midi.event.MidiEventListenerSource;
 import com.dex.midi.event.MidiEventException;
+import com.dex.midi.event.MidiEventObservableSource;
 import com.dex.midi.event.SimpleMidiEventProducer;
 import com.dex.midi.handler.PrintMidiEventListener;
 import com.dex.midi.util.SimpleLogger;
@@ -14,7 +15,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.logging.Level;
 
-public class Driver {
+public class Driver implements MidiDriver {
 	
 	private static final String EXIT = "exit";
 	
@@ -31,6 +32,16 @@ public class Driver {
 	}
 
 	public MidiEventListenerSource getMidiEventProducer() {
+		return SimpleMidiEventProducer.getInstance();
+	}
+
+	@Override
+	public MidiEventListenerSource getMidiEventListenerSource() {
+		return SimpleMidiEventProducer.getInstance();
+	}
+
+	@Override
+	public MidiEventObservableSource getMidiEventObservableSource() {
 		return SimpleMidiEventProducer.getInstance();
 	}
 
@@ -67,6 +78,7 @@ public class Driver {
 		}
 	}
 	
+	@Override
 	public void run() {
 		final String method = "run";
 		
@@ -100,6 +112,7 @@ public class Driver {
 		}
 	}
 	
+	@Override
 	public void close() {
 		final String method = "close";
 

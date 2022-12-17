@@ -1,9 +1,6 @@
 package com.dex.midi;
 
-import com.dex.midi.chord.Chord;
-import com.dex.midi.chord.ChordEventListener;
-import com.dex.midi.chord.MidiChordListener;
-import com.dex.midi.chord.SimpleChordEventProducer;
+import com.dex.midi.chord.*;
 import com.dex.midi.event.MidiEventListenerSource;
 import com.dex.midi.util.SimpleLogger;
 
@@ -14,12 +11,9 @@ public class ChordDriver extends com.dex.midi.Driver implements ChordEventListen
 
 	@Override
 	public void init(MidiEventListenerSource p) {
-		SimpleChordEventProducer cp = new SimpleChordEventProducer();
-		
-		MidiChordListener l = new MidiChordListener(cp);
-		cp.addChordEventListener(this);
-		
-		p.addMidiEventListener(l);
+		MidiEventChordAdapter adapter = new MidiEventChordAdapter().registerListener(p);
+
+		adapter.addChordEventListener(this);
 	}
 	
 	@Override
