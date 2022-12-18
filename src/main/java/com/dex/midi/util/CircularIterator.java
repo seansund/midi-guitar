@@ -9,21 +9,34 @@ public class CircularIterator<E> implements Iterator<E> {
 	final private List<E> list;
 	private int startIndex;
 	private int currentIndex;
-	
+
+	public CircularIterator(E[] list) {
+		this(Arrays.asList(list));
+	}
+
+	public CircularIterator(List<E> list) {
+		this(list, 0);
+	}
+
 	public CircularIterator(List<E> list, E start) {
-		super();
-		
-		this.list = list;
-		this.startIndex = this.currentIndex = this.list.indexOf(start);
+		this(list, list.indexOf(start));
 	}
-	
+
 	public CircularIterator(E[] list, E start) {
-		super();
-		
-		this.list = Arrays.asList(list);
-		this.startIndex = this.currentIndex = this.list.indexOf(start);
+		this(Arrays.asList(list), start);
 	}
-	
+
+	public CircularIterator(List<E> list, int startIndex) {
+		super();
+
+		if (startIndex < 0 || startIndex >= list.size()) {
+			throw new ArrayIndexOutOfBoundsException("Start index is out of bounds: " + startIndex);
+		}
+
+		this.list = list;
+		this.startIndex = this.currentIndex = startIndex;
+	}
+
 	public void reset() {
 		currentIndex = startIndex;
 	}
