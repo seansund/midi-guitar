@@ -9,14 +9,21 @@ public class CircularIterator<E> implements Iterator<E> {
 	final private List<E> list;
 	private int startIndex;
 	private int currentIndex;
-	
+
+	public CircularIterator(List<E> list, int startIndex) {
+		super();
+
+		this.list = list;
+		this.startIndex = this.currentIndex = startIndex;
+	}
+
 	public CircularIterator(List<E> list, E start) {
 		super();
-		
+
 		this.list = list;
 		this.startIndex = this.currentIndex = this.list.indexOf(start);
 	}
-	
+
 	public CircularIterator(E[] list, E start) {
 		super();
 		
