@@ -44,3 +44,5 @@ jobs:
       env:
         USERNAME: 'seansund'
         TOKEN: ${{ secrets.TOKEN }}
+        GIT_USERNAME: 'seansund'
+        GIT_TOKEN: ${{ secrets.TOKEN }}
