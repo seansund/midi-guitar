@@ -7,6 +7,8 @@ import com.dex.midi.event.SimpleMidiEventProducer;
 import com.dex.midi.handler.PrintMidiEventListener;
 import com.dex.midi.util.SimpleLogger;
 
+import javax.annotation.Nonnull;
+import javax.annotation.RegEx;
 import javax.sound.midi.MidiSystem;
 import javax.sound.midi.MidiUnavailableException;
 import javax.sound.midi.Transmitter;
@@ -80,19 +82,36 @@ public class Driver implements MidiDriver {
 	
 	@Override
 	public void run() {
+		run(() -> {
+			BufferedReader in = null;
+			try {
+				in = new BufferedReader(new InputStreamReader(System.in));
+
+				for (String line = in.readLine(); line != null; line = in.readLine()) {
+					if ("EXIT".equalsIgnoreCase(line)) {
+						throw new RuntimeException("Exit");
+					}
+				}
+			} catch (IOException e) {
+				throw new RuntimeException("Error reading stream", e);
+			} finally {
+				if (in != null) {
+					try {
+						in.close();
+					} catch (Throwable ignore) {}
+				}
+			}
+		});
+	}
+
+	public void run(@Nonnull DriverControl control) {
 		final String method = "run";
-		
+
 		try {
 			startup();
 			getMidiEventProducer().addMidiEventListener(new PrintMidiEventListener());
 
-			while (!Thread.interrupted()) {
-				try {
-					Thread.sleep(300000);
-				} catch (InterruptedException e) {
-					throw new RuntimeException(e);
-				}
-			}
+			control.waitForClose();
 		} catch (MidiUnavailableException e) {
 			SimpleLogger.log(Level.SEVERE, this, method, "Midi resources unavailable", e);
 		} catch (MidiEventException e) {
@@ -101,8 +120,9 @@ public class Driver implements MidiDriver {
 			SimpleLogger.log(Level.INFO, this, method, "Closing down midi connection");
 			close();
 		}
+
 	}
-	
+
 	@Override
 	public void close() {
 		final String method = "close";
