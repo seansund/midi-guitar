@@ -82,32 +82,23 @@ public class Driver implements MidiDriver {
 	public void run() {
 		final String method = "run";
 		
-		BufferedReader in = null;
 		try {
 			startup();
 			getMidiEventProducer().addMidiEventListener(new PrintMidiEventListener());
-			
-			in = new BufferedReader(new InputStreamReader(System.in));
-			String line = in.readLine();
-			while (line != null) {
-				if (Driver.EXIT.equalsIgnoreCase(line)) {
-					break;
+
+			while (!Thread.interrupted()) {
+				try {
+					Thread.sleep(300000);
+				} catch (InterruptedException e) {
+					throw new RuntimeException(e);
 				}
-				line = in.readLine();
 			}
 		} catch (MidiUnavailableException e) {
 			SimpleLogger.log(Level.SEVERE, this, method, "Midi resources unavailable", e);
-		} catch (IOException e) {
-			SimpleLogger.log(Level.SEVERE, this, method, "Input stream error", e);
 		} catch (MidiEventException e) {
 			SimpleLogger.log(Level.SEVERE, this, method, "Exception processing midi events", e);
 		} finally {
-			if (in != null) {
-				try {
-					in.close();
-				} catch (IOException ignore) { }
-			}
-			
+			SimpleLogger.log(Level.INFO, this, method, "Closing down midi connection");
 			close();
 		}
 	}
