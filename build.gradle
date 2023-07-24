@@ -19,7 +19,7 @@ repositories {
 }
 
 group = 'midi-guitar'
-version = '0.4.0'
+version = '0.4.1'
 
 dependencies {
     // This dependency is used by the application.
@@ -55,8 +55,8 @@ publishing {
             name = "GitHubPackages"
             url = uri("https://maven.pkg.github.com/seansund/maven")
             credentials {
-                username = project.findProperty("gpr.user") ?: System.getenv("USERNAME")
-                password = project.findProperty("gpr.key") ?: System.getenv("TOKEN")
+                username = project.findProperty("gpr.user") ?: System.getenv("GIT_USERNAME")
+                password = project.findProperty("gpr.key") ?: System.getenv("GIT_TOKEN")
             }
         }
     }

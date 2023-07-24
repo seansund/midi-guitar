@@ -12,17 +12,17 @@ public enum ChordStructure {
 	DIMINISHED("dim", 1, -3, -5),
 	AUGMENTED("aug", 1, 3, -6), // b6 = #5
 	DOM7("7", 1, 3, 5, -7),
-	MINOR7("m7", 1, -3, 5, -7),
 	MAJOR7("maj7", 1, 3, 5, 7),
+	MINOR7("m7", 1, -3, 5, -7),
 	DIMINISHED7("dim7", 1, -3, -5, -7),
 	AUGMENTED7("aug7", 1, 3, -6, -7), // b6 = #5
-	MINORMAJOR7("mmaj7", 1, -3, 5, -7),
+	MINORMAJOR7("mmaj7", 1, -3, 5, 7),
 	AUGMENTEDMAJOR7("aug7", 1, 3, -6, 7), // b6 = #5
 	SEVENFLAT5("7b5", 1, 3, -5, -7),
 	SEVENSHARP5("7#5", 1, 3, -6, -7), // b6 = #5
 	MINORSEVENSHARP5("m7#5", 1, -3, -6, -7), // b6 = #5
 	SEVENSHARP9("7#9", 1, -3, -7), // b3 = #2
-	SEVENFLAT9("7#9", 1, -2, 3, 5, -7),
+	SEVENFLAT9("7b9", 1, -2, 3, 5, -7),
 	SUS2("sus2", 1, 2, 5),
 	SEVENSUS2("7sus2", 1, 2, 5, -7),
 	SUS4("sus4", 1, 4, 5),
