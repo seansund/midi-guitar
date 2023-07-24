@@ -19,7 +19,7 @@ repositories {
 }
 
 group = 'midi-guitar'
-version = '0.4.1'
+version = '0.4.2'
 
 dependencies {
     // This dependency is used by the application.
