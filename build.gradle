@@ -19,7 +19,7 @@ repositories {
 }
 
 group = 'midi-guitar'
-version = '1.0.0'
+version = '1.0.1'
 
 dependencies {
     // This dependency is used internally, and not exposed to consumers on their own compile classpath.
