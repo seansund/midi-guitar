@@ -203,7 +203,7 @@ public class StringState {
 		BendList bendList = getBendList();
 		
 		FastFourierTransformer transform = new FastFourierTransformer(DftNormalization.STANDARD);
-		double[] vals = bendList.getForierValues();
+		double[] vals = bendList.getFourierValues();
 		Complex[] result = transform.transform(vals, TransformType.FORWARD);
 		System.out.println("=== Transform result: " + Arrays.asList(result));
 		

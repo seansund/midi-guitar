@@ -5,7 +5,7 @@ import com.dex.midi.model.StringOffset;
 import io.reactivex.rxjava3.core.Observable;
 
 public interface MidiControlEventObservable {
-    public Observable<MusicalKey> getKeyChangeObservable();
+    Observable<MusicalKey> getKeyChangeObservable();
 
-    public Observable<StringOffset> getStringOffsetObservable();
+    Observable<StringOffset> getStringOffsetObservable();
 }

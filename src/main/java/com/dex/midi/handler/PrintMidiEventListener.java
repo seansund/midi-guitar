@@ -11,7 +11,7 @@ public class PrintMidiEventListener implements MidiEventListener {
 	
 	private static final String PADDING = "          ";
 	
-	private PitchEvent[] events = new PitchEvent[] { null, null, null, null, null, null };
+	private final PitchEvent[] events = new PitchEvent[] { null, null, null, null, null, null };
 
 	@Override
 	public void noteOn(PitchEvent e) {
@@ -39,13 +39,13 @@ public class PrintMidiEventListener implements MidiEventListener {
 	}
 
 	protected void print(int stringIndex) {
-		StringBuffer buf = new StringBuffer(80);
+		final StringBuilder buf = new StringBuilder(80);
 		buf.append(StringUtil.PIPE);
 		
 		for (int i = events.length - 1; i >= 0; i--) {
 			PitchEvent e = events[i];
 			
-			StringBuffer b = new StringBuffer(12);
+			final StringBuilder b = new StringBuilder(12);
 			
 			if (i == stringIndex) {
 				b.append(StringUtil.STAR);
@@ -67,7 +67,7 @@ public class PrintMidiEventListener implements MidiEventListener {
 			buf.append(b).append(StringUtil.PIPE);
 		}
 		
-		System.out.println(buf.toString());
+		System.out.println(buf);
 	}
 
 	@Override

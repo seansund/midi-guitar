@@ -5,5 +5,5 @@ import java.util.Comparator;
 
 public interface BendEntryComparator extends Comparator<BendEntry> {
 	
-	public BendEntryComparator invert();
+	BendEntryComparator invert();
 }

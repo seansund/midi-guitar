@@ -4,7 +4,7 @@ import java.util.Comparator;
 
 public class InverseComparator<T> implements Comparator<T> {
 
-	private Comparator<T> c;
+	private final Comparator<T> c;
 	
 	public InverseComparator(Comparator<T> c) {
 		this.c = c;

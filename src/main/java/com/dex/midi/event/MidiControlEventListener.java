@@ -5,7 +5,7 @@ import com.dex.midi.model.StringOffset;
 
 public interface MidiControlEventListener {
 
-	public void keyChanged(MusicalKey key);
+	void keyChanged(MusicalKey key);
 	
-	public void stringOffsetChanged(StringOffset offset);
+	void stringOffsetChanged(StringOffset offset);
 }

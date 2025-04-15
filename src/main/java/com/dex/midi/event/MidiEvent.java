@@ -1,7 +1,12 @@
 package com.dex.midi.event;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.sound.midi.MidiMessage;
 
+@Setter
+@Getter
 public class MidiEvent<T extends MidiMessage> {
 	
 	private T message;
@@ -17,18 +22,5 @@ public class MidiEvent<T extends MidiMessage> {
 		this.message = message;
 		this.tick = tick;
 	}
-	
-	public T getMessage() {
-		return message;
-	}
-	public void setMessage(T message) {
-		this.message = message;
-	}
-	public long getTick() {
-		return tick;
-	}
-	public void setTick(long tick) {
-		this.tick = tick;
-	}
-	
+
 }

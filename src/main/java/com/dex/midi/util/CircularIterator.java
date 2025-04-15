@@ -1,5 +1,7 @@
 package com.dex.midi.util;
 
+import lombok.Getter;
+
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
@@ -7,7 +9,8 @@ import java.util.List;
 public class CircularIterator<E> implements Iterator<E> {
 
 	final private List<E> list;
-	private int startIndex;
+	@Getter
+    private int startIndex;
 	private int currentIndex;
 
 	public CircularIterator(E[] list) {
@@ -40,12 +43,8 @@ public class CircularIterator<E> implements Iterator<E> {
 	public void reset() {
 		currentIndex = startIndex;
 	}
-	
-	public int getStartIndex() {
-		return startIndex;
-	}
-	
-	public void setStartIndex(int startIndex) {
+
+    public void setStartIndex(int startIndex) {
 		this.startIndex = startIndex;
 	}
 	

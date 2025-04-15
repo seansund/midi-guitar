@@ -2,17 +2,16 @@ package com.dex.midi.event;
 
 import com.dex.midi.model.GuitarPositions;
 
-public interface MidiEventProducer {
+public interface MidiEventProducer extends AutoCloseable {
 
-	public void mergeProducers(MidiEventProducer that);
+	void mergeProducers(MidiEventProducer that);
 
-	public void fireNoteOn(PitchEvent e);
+	void fireNoteOn(PitchEvent e);
 	
-	public void fireNoteOff(PitchEvent e);
+	void fireNoteOff(PitchEvent e);
 	
-	public void firePitchBend(PitchBendEvent e);
+	void firePitchBend(PitchBendEvent e);
 
-	public void fireGuitarPositions(GuitarPositions positions);
+	void fireGuitarPositions(GuitarPositions positions);
 
-	public void close();
 }

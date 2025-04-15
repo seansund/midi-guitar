@@ -42,8 +42,8 @@ public class ChordTest {
         final List<Chord> actual = Chord.identifyChords(input);
 
         assertNotNull(actual, "Chord list should not be null");
-        assertTrue(actual.size() > 0, "Chord list should not be empty");
-        assertEquals(actual.get(0).toString(), "G");
+        assertTrue(!actual.isEmpty(), "Chord list should not be empty");
+        assertEquals(actual.getFirst().toString(), "G");
       }
     }
   }

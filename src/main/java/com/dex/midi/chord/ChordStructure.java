@@ -45,8 +45,8 @@ public enum ChordStructure {
 	MINORSHARP5("m#5", 1, -3, -6),
 	ROOT("", 1);
 	
-	private static final Map<String, ChordStructure> MAP = new HashMap<String, ChordStructure>();
-	private static final Set<String> FAILED_MAP = new HashSet<String>();
+	private static final Map<String, ChordStructure> MAP = new HashMap<>();
+	private static final Set<String> FAILED_MAP = new HashSet<>();
 	
 	static {
 		for (ChordStructure c : ChordStructure.values()) {
@@ -57,8 +57,8 @@ public enum ChordStructure {
 		MAP.put(ChordStructure.buildIntervalCode(1, 4, 6), null);
 	}
 	
-	private String display;
-	private int[] intervals;
+	private final String display;
+	private final int[] intervals;
 	
 	ChordStructure(String display, int... intervals) {
 		this.display = display;
@@ -89,16 +89,15 @@ public enum ChordStructure {
 		
 		String intervalCode = ChordStructure.buildIntervalCode(intervals);
 		
-		ChordStructure struct = null;
 		if (MAP.containsKey(intervalCode)) {
-			struct = MAP.get(intervalCode);
+			return MAP.get(intervalCode);
 		} else if (!FAILED_MAP.contains(intervalCode)) {
 			FAILED_MAP.add(intervalCode);
 
 			SimpleLogger.log(Level.WARNING, ChordStructure.class, method, "Unable to find ChordStructure: {0}", intervalCode);
 		}
 		
-		return struct;
+		return null;
 	}
 	
 	public String toString() {
@@ -118,17 +117,17 @@ public enum ChordStructure {
 		
 		@Override
 		public int compare(Integer int1, Integer int2) {
-			int compare = -1;
-			
 			if (int1 != null && int2 != null) {
-				compare = Math.abs(int1.intValue()) - Math.abs(int2.intValue());
+				int compare = Math.abs(int1) - Math.abs(int2);
 				
 				if (compare == 0) {
-					compare = int1.intValue() - int2.intValue();
+					return int1 - int2;
 				}
+
+				return compare;
 			}
 			
-			return compare;
+			return -1;
 		}
 	}
 }

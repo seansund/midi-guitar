@@ -1,7 +1,12 @@
 package com.dex.midi.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.Objects;
 
+@Setter
+@Getter
 public class StringOffset {
 
     private int stringIndex;
@@ -12,21 +17,6 @@ public class StringOffset {
 
     public StringOffset(int stringIndex, int value) {
         this.stringIndex = stringIndex;
-        this.value = value;
-    }
-    public int getStringIndex() {
-        return stringIndex;
-    }
-
-    public void setStringIndex(int stringIndex) {
-        this.stringIndex = stringIndex;
-    }
-
-    public int getValue() {
-        return value;
-    }
-
-    public void setValue(int value) {
         this.value = value;
     }
 

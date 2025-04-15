@@ -7,9 +7,9 @@ import java.util.Map;
 
 public interface DecoratedView<T> extends UniqueItem {
 	
-	public void init(Map<Object, Object> obj);
+	void init(Map<Object, Object> obj);
 	
-	public Decorator<T> getDecorator(GuitarPosition fret);
+	Decorator<T> getDecorator(GuitarPosition fret);
 	
-	public Decorator<T> getDecorator(int stringIndex, int fretIndex);
+	Decorator<T> getDecorator(int stringIndex, int fretIndex);
 }

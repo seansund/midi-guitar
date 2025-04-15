@@ -2,7 +2,6 @@ package com.dex.midi.view;
 
 import com.dex.midi.chord.*;
 import com.dex.midi.util.StringUtil;
-import com.dex.midi.view.AbstractMidiGuitarPlugin;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -42,14 +41,14 @@ public class ChordMidiGuitarPlugin extends AbstractMidiGuitarPlugin<JComponent> 
 			label = new JLabel(StringUtil.EMPTY);
 			
 			Font f = label.getFont();
-			Font newFont = new Font(f.getName(), f.getStyle(), (int)(f.getSize() * 2));
+			Font newFont = new Font(f.getName(), f.getStyle(), (f.getSize() * 2));
 			label.setFont(newFont);
 			
 			d.add(label);
 			
 			p.addChordEventListener(new ChordEventHandler());
 			
-			c = new ArrayList<JComponent>(1);
+			c = new ArrayList<>(1);
 			c.add(d);
 		}
 		

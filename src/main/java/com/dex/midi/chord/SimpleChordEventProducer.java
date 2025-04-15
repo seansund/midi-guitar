@@ -1,10 +1,7 @@
 package com.dex.midi.chord;
 
 import com.dex.midi.event.AbstractEventObservable;
-import com.dex.midi.event.AbstractEventProducer;
-import com.dex.midi.event.MidiEventListener;
 import io.reactivex.rxjava3.core.Observable;
-import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.subjects.BehaviorSubject;
 
 import java.util.List;

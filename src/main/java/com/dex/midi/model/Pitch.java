@@ -1,20 +1,25 @@
 package com.dex.midi.model;
 
 import com.dex.midi.util.SimpleLogger;
+import lombok.Getter;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.Level;
 
+@Getter
 public class Pitch implements Comparable<Pitch>, Serializable {
+	@Serial
 	private static final long serialVersionUID = 1L;
 	
 	private static final String STRING_FORMAT = "%s%d";
 	
-	private Note note;
-	private int octave;
+	private final Note note;
+	private final int octave;
 	
 	public Pitch(Note note, int octave) {
 		super();
@@ -50,9 +55,7 @@ public class Pitch implements Comparable<Pitch>, Serializable {
 		
 		// f = 440 * (2 ^ ((pitchPosition - 69) / 12))
 		int index = Pitch.getPitchIndex(octave, note);
-		double freq = 440 * Math.pow(2, (index - 69.0) / 12.0);
-		
-		return freq;
+		return 440 * Math.pow(2, (index - 69.0) / 12.0);
 	}
 	
 	protected static int getPitchIndex(Pitch p) {
@@ -109,17 +112,14 @@ public class Pitch implements Comparable<Pitch>, Serializable {
 	@Override
 	public int hashCode() {
 		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((note == null) ? 0 : note.hashCode());
-		result = prime * result + octave;
-		return result;
+
+		return Objects.hash(prime, note, octave);
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof Pitch) {
-			Pitch other = (Pitch) obj;
-			if (this == other) {
+		if (obj instanceof Pitch other) {
+            if (this == other) {
 				return true;
 			}
 			if (!getClass().equals(other.getClass())) {
@@ -128,39 +128,28 @@ public class Pitch implements Comparable<Pitch>, Serializable {
 			if (!note.equals(other.note)) {
 				return false;
 			}
-			if (octave != other.octave) {
-				return false;
-			}
-			return true;
-		}
+            return octave == other.octave;
+        }
 		return false;
 	}
 
-	public Note getNote() {
-		return note;
-	}
-
-	public int getOctave() {
-		return octave;
-	}
-
-	public double getFrequency() {
+    public double getFrequency() {
 		return Pitch.calculateFrequency(note, octave);
 	}
 
 	@Override
 	public int compareTo(Pitch o) {
-		int compare = -1;
-		
 		if (o != null) {
-			compare = this.octave - o.octave;
+			int compare = this.octave - o.octave;
 			
-			if (compare == 0) {
-				compare = Note.indexOf(this.note) - Note.indexOf(o.note);
+			if (compare != 0) {
+				return compare;
 			}
+
+			return Note.indexOf(this.note) - Note.indexOf(o.note);
 		}
 		
-		return compare;
+		return -1;
 	}
 	
 	public static void main(String[] args) {

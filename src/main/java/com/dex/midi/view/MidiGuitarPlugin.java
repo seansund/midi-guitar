@@ -6,42 +6,40 @@ import com.dex.midi.event.MidiEventProducer;
 
 import java.util.Collection;
 
-public interface MidiGuitarPlugin<T> {
+public interface MidiGuitarPlugin<T> extends AutoCloseable {
 	
 	// display values
 	
-	public String getLabel();
+	String getLabel();
 	
-	public Collection<T> getControlComponents();
+	Collection<T> getControlComponents();
 	
-	public Collection<T> getDisplayComponents();
+	Collection<T> getDisplayComponents();
 	
-	public FretboardViewFactory getFretboardViewFactory();
+	FretboardViewFactory getFretboardViewFactory();
 	
-	public void setFretboardViewFactory(FretboardViewFactory factory);
+	void setFretboardViewFactory(FretboardViewFactory factory);
 	
-	public DecoratedViewFactory<T> getDecoratedViewFactory();
+	DecoratedViewFactory<T> getDecoratedViewFactory();
 	
-	public void setDecoratedViewFactory(DecoratedViewFactory<T> dFactory);
+	void setDecoratedViewFactory(DecoratedViewFactory<T> dFactory);
 	
 	// event producers
 	
-	public MidiEventProducer getMidiEventProducer();
+	MidiEventProducer getMidiEventProducer();
 	
-	public FretboardViewEventProducer getFretboardViewEventProducer();
+	FretboardViewEventProducer getFretboardViewEventProducer();
 	
-	public void setFretboardViewEventProducer(FretboardViewEventProducer p);
+	void setFretboardViewEventProducer(FretboardViewEventProducer p);
 	
-	public MidiControlEventProducer getMidiControlEventProducer();
+	MidiControlEventProducer getMidiControlEventProducer();
 	
-	public void setMidiControlEventProducer(MidiControlEventProducer p);
+	void setMidiControlEventProducer(MidiControlEventProducer p);
 
-	public DecoratedViewEventProducer<T> getDecoratedViewEventProducer();
+	DecoratedViewEventProducer<T> getDecoratedViewEventProducer();
 	
-	public void setDecoratedViewEventProducer(DecoratedViewEventProducer<T> p);
+	void setDecoratedViewEventProducer(DecoratedViewEventProducer<T> p);
 	
-	public void init();
+	void init();
 	
-	public void close();
-
 }

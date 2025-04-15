@@ -1,13 +1,14 @@
 package com.dex.midi.event;
 
 import com.dex.midi.event.util.Disposables;
-import com.dex.midi.model.GuitarPosition;
 import com.dex.midi.model.GuitarPositions;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.subjects.BehaviorSubject;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SimpleMidiEventProducer implements MidiEventObservableSource, MidiEventListenerSource {
 
@@ -32,9 +33,7 @@ public class SimpleMidiEventProducer implements MidiEventObservableSource, MidiE
 
     @Override
     public void mergeProducers(MidiEventProducer that) {
-        if (that instanceof SimpleMidiEventProducer) {
-            final SimpleMidiEventProducer thatP = (SimpleMidiEventProducer) that;
-
+        if (that instanceof SimpleMidiEventProducer thatP) {
             thatP.noteOnSubject.subscribe(this.noteOnSubject);
             thatP.noteOffSubject.subscribe(this.noteOffSubject);
             thatP.pitchBendSubject.subscribe(this.pitchBendSubject);

@@ -13,9 +13,9 @@ public class Chord implements Comparable<Chord> {
 
 	private static final int[] MAJOR_INTERVAL = { 1, -2, 2, -3, 3, 4, -5, 5, -6, 6, -7, 7 };
 	
-	private Note root;
-	private ChordStructure structure;
-	private Note first;
+	private final Note root;
+	private final ChordStructure structure;
+	private final Note first;
 	
 	public Chord(Note root, ChordStructure structure) {
 		this(root, structure, root);
@@ -103,17 +103,20 @@ public class Chord implements Comparable<Chord> {
 				.sorted()
 				.collect(Collectors.toList());
 	}
+
+	private static Set<Note> removeFirst(Set<Note> noteSet, Note first) {
+		final Set<Note> copy = new CountingSet<>(noteSet);
+
+		copy.remove(first);
+
+		return copy;
+	}
 	
-	protected static Optional<Chord> processNoteSet(Note root, Set<Note> noteSet, Note first) {
-		if (!root.equals(first)) {
-			// make a copy so we don't alter the original
-			noteSet = new CountingSet<Note>(noteSet);
-			
-			// remove the first note because it is part of the inversion
-			// and not part of the chord
-			noteSet.remove(first);
-		}
-		
+	protected static Optional<Chord> processNoteSet(Note root, Set<Note> origNoteSet, Note first) {
+		final Set<Note> noteSet = (!root.equals(first))
+				? removeFirst(origNoteSet, first)
+				: origNoteSet;
+
 		List<Integer> intervals = Chord.calculateIntervals(root, noteSet);
 		
 		try {
@@ -136,7 +139,7 @@ public class Chord implements Comparable<Chord> {
 	}
 	
 	public String toString() {
-		StringBuffer buf = new StringBuffer(20);
+		final StringBuilder buf = new StringBuilder(20);
 		
 		buf.append(root).append(structure);
 		if (isInversion()) {
@@ -158,18 +161,18 @@ public class Chord implements Comparable<Chord> {
 	public static void main(String[] args) {
 		final String method = "main";
 		
-		List<Note> l1 = new ArrayList<Note>(6);
+		List<Note> l1 = new ArrayList<>(6);
 		l1.add(Note.E);
 		l1.add(Note.C);
 		l1.add(Note.G);
 		l1.add(Note.E);
 		l1.add(Note.C);
 		
-		List<Chord> c1 = Chord.identifyChords(l1.toArray(new Note[l1.size()]));
+		List<Chord> c1 = Chord.identifyChords(l1.toArray(new Note[0]));
 		SimpleLogger.log(Level.INFO, Chord.class, method, "{0}", c1);
 		
 		
-		List<StringPitch> l2 = new ArrayList<StringPitch>(6);
+		List<StringPitch> l2 = new ArrayList<>(6);
 		l2.add(new StringPitch(5, new Pitch(Note.Fsharp, 4)));
 		l2.add(new StringPitch(4, new Pitch(Note.D, 4)));
 		l2.add(new StringPitch(3, new Pitch(Note.A, 3)));
@@ -181,7 +184,7 @@ public class Chord implements Comparable<Chord> {
 		SimpleLogger.log(Level.INFO, Chord.class, method, "{0}", c2);
 		
 		
-		Set<StringPitch> l3 = new HashSet<StringPitch>(6);
+		Set<StringPitch> l3 = new HashSet<>(6);
 		l3.add(new StringPitch(5, new Pitch(Note.G, 4)));
 		l3.add(new StringPitch(4, new Pitch(Note.D, 4)));
 		l3.add(new StringPitch(3, new Pitch(Note.G, 3)));

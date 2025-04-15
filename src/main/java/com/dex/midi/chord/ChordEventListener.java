@@ -2,9 +2,7 @@ package com.dex.midi.chord;
 
 import java.util.List;
 
-public interface ChordEventListener {
+public interface ChordEventListener extends AutoCloseable {
 
-	public void chordChange(List<Chord> chords);
-
-	public void close();
+	void chordChange(List<Chord> chords);
 }

@@ -6,11 +6,11 @@ import io.reactivex.rxjava3.subjects.BehaviorSubject;
 
 public class SimpleDecoratedViewEventProducer<T> extends AbstractEventObservable<DecoratedViewEventListener<T>> implements DecoratedViewEventListenerSource<T>, DecoratedViewEventObservableSource<T> {
 
-    private static SimpleDecoratedViewEventProducer instance;
+    private static SimpleDecoratedViewEventProducer<?> instance;
 
     private final BehaviorSubject<DecoratedView<T>> subject = BehaviorSubject.create();
 
-    public static SimpleDecoratedViewEventProducer getInstance() {
+    public static SimpleDecoratedViewEventProducer<?> getInstance() {
         if (instance != null) {
             return instance;
         }
@@ -35,9 +35,7 @@ public class SimpleDecoratedViewEventProducer<T> extends AbstractEventObservable
 
     @Override
     public void mergeProducers(DecoratedViewEventProducer<T> that) {
-        if (that instanceof SimpleDecoratedViewEventProducer) {
-            final SimpleDecoratedViewEventProducer<T> thatP = (SimpleDecoratedViewEventProducer<T>) that;
-
+        if (that instanceof SimpleDecoratedViewEventProducer<T> thatP) {
             subject.subscribe(thatP.subject);
         }
     }

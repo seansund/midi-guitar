@@ -10,8 +10,8 @@ import java.util.stream.Collectors;
 
 public class CountingSet<E> implements Set<E> {
 	
-	private Map<E, Integer> countMap = new LinkedHashMap<E, Integer>(20);
-	private List<E> list = new ArrayList<E>(20);
+	private final Map<E, Integer> countMap = new LinkedHashMap<>(20);
+	private final List<E> list = new ArrayList<>(20);
 	
 	public CountingSet() {
 		super();
@@ -23,7 +23,7 @@ public class CountingSet<E> implements Set<E> {
 		if (c instanceof CountingSet) {
 			@SuppressWarnings("unchecked")
 			CountingSet<E> n = (CountingSet<E>)c;
-			
+
 			this.countMap.putAll(n.countMap);
 			this.list.addAll(n.list);
 		} else {
@@ -40,7 +40,7 @@ public class CountingSet<E> implements Set<E> {
 
 			@Override
 			public BiConsumer<CountingSet<T>, T> accumulator() {
-				return (set, value) -> set.add(value);
+				return CountingSet::add;
 			}
 
 			@Override
@@ -66,22 +66,17 @@ public class CountingSet<E> implements Set<E> {
 
 	@Override
 	public boolean add(E val) {
-		boolean result = false;
-		
-		Integer count = countMap.get(val);
-		if (count == null) {
-			count = Integer.valueOf(1);
-			
-			result = true;
-		} else {
-			result = count.intValue() == 0;
-			
-			count = Integer.valueOf(count.intValue() + 1);
-		}
-		countMap.put(val, count);
+
 		list.add(val);
-		
-		return result;
+
+		final Integer count = countMap.get(val);
+		if (count == null) {
+			countMap.put(val, 1);
+			return true;
+		} else {
+			countMap.put(val, count + 1);
+			return count == 0;
+		}
 	}
 
 	@Override
@@ -138,8 +133,8 @@ public class CountingSet<E> implements Set<E> {
 		
 		Integer count = countMap.get(val);
 		if (count != null) {
-			if (count.intValue() > 1) {
-				count = Integer.valueOf(count.intValue() - 1);
+			if (count > 1) {
+				count = count - 1;
 			} else {
 				count = null;
 			}

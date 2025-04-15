@@ -3,15 +3,14 @@ package com.dex.midi.event;
 
 import com.dex.midi.model.GuitarPositions;
 
-public interface MidiEventListener {
+public interface MidiEventListener extends AutoCloseable {
 	
-	public void noteOn(PitchEvent e);
+	void noteOn(PitchEvent e);
 	
-	public void noteOff(PitchEvent e);
+	void noteOff(PitchEvent e);
 	
-	public void pitchBend(PitchBendEvent e);
+	void pitchBend(PitchBendEvent e);
 
-	public void guitarPositions(GuitarPositions positions);
+	void guitarPositions(GuitarPositions positions);
 	
-	public void close();
 }

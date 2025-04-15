@@ -2,24 +2,28 @@ package com.dex.midi.event;
 
 import com.dex.midi.model.GuitarPosition;
 import com.dex.midi.model.Pitch;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.sound.midi.ShortMessage;
 
+@Setter
+@Getter
 public class PitchEvent extends MidiEvent<ShortMessage> {
 	
 	private static final String STRING_FORMAT = "[NoteEvent(%s): %s]";
 
-	private GuitarPosition fret;
+	private GuitarPosition guitarFret;
 	private Type type;
 	
 	public PitchEvent() {
 		super();
 	}
 	
-	public PitchEvent(ShortMessage msg, long tick, GuitarPosition fret) {
+	public PitchEvent(ShortMessage msg, long tick, GuitarPosition guitarFret) {
 		super(msg, tick);
 		
-		this.fret = fret;
+		this.guitarFret = guitarFret;
 		
 		int command = msg.getCommand();
 		if (msg.getData2() == 0) {
@@ -28,41 +32,25 @@ public class PitchEvent extends MidiEvent<ShortMessage> {
 		
 		type = Type.getType(command);
 	}
-	
-	public GuitarPosition getGuitarFret() {
-		return fret;
-	}
 
-	public void setGuitarFret(GuitarPosition fret) {
-		this.fret = fret;
-	}
-	
-	public int getStringIndex() {
-		return fret.getStringIndex();
-	}
-	
-	public int getFretIndex() {
-		return fret.getFretIndex();
-	}
-	
-	public Pitch getPitch() {
-		return fret.getPitch();
-	}
-
-	public Type getType() {
-		return type;
-	}
-
-	public void setType(Type type) {
-		this.type = type;
-	}
-	
-	public int getVelocity() {
+    public int getVelocity() {
 		return getMessage().getData2();
 	}
-	
+
+	public int getFretIndex() {
+		return guitarFret.getFretIndex();
+	}
+
+	public int getStringIndex() {
+		return guitarFret.getStringIndex();
+	}
+
+	public Pitch getPitch() {
+		return guitarFret.getPitch();
+	}
+
 	public String toString() {
-		return String.format(STRING_FORMAT, type, fret);
+		return String.format(STRING_FORMAT, type, guitarFret);
 	}
 
 	public static enum Type {
