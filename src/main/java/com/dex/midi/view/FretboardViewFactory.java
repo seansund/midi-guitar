@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface FretboardViewFactory {
 	
-	public List<? extends FretboardView> getViews();
+	List<? extends FretboardView> getViews();
 	
-	public FretboardView getCurrentView();
+	FretboardView getCurrentView();
 }

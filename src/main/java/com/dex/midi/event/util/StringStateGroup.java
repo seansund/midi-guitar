@@ -8,7 +8,7 @@ import java.util.List;
 
 public class StringStateGroup {
 	
-	private StringState[] status = null;
+	private final StringState[] status;
 	
 	public StringStateGroup(MidiConfig c) {
 		status = new StringState[c.getStringCount()];

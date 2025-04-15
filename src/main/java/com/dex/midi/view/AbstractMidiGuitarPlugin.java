@@ -10,14 +10,14 @@ import java.util.logging.Level;
 
 public abstract class AbstractMidiGuitarPlugin<T> implements MidiGuitarPlugin<T> {
 	
-	private String label;
+	private final String label;
 	protected FretboardViewFactory factory;
 	protected DecoratedViewFactory<T> dFactory;
 	
-	private Driver driver = null;
-	private FretboardViewEventProducer fvep = null;
-	private MidiControlEventProducer mcep = null;
-	private DecoratedViewEventProducer<T> dvp = null;
+	private final Driver driver;
+	private FretboardViewEventProducer fvep;
+	private MidiControlEventProducer mcep;
+	private DecoratedViewEventProducer<T> dvp;
 	
 	private boolean initialized = false;
 	
@@ -114,7 +114,7 @@ public abstract class AbstractMidiGuitarPlugin<T> implements MidiGuitarPlugin<T>
 	@Override
 	public DecoratedViewEventProducer<T> getDecoratedViewEventProducer() {
 		if (dvp == null) {
-			dvp = new SimpleDecoratedViewEventProducer<T>();
+			dvp = new SimpleDecoratedViewEventProducer<>();
 		}
 		return dvp;
 	}

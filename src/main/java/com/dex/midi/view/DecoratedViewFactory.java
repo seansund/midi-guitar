@@ -4,11 +4,11 @@ import java.util.Collection;
 
 public interface DecoratedViewFactory<T> {
 	
-	public DecoratedView<T> getDefaultView();
+	DecoratedView<T> getDefaultView();
 
-	public DecoratedView<T> getView(String id);
+	DecoratedView<T> getView(String id);
 	
-	public Collection<DecoratedView<T>> getViews();
+	Collection<DecoratedView<T>> getViews();
 	
-	public DecoratedView<T>[] getViewArray();
+	DecoratedView<T>[] getViewArray();
 }

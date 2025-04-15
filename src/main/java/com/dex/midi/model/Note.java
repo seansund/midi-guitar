@@ -7,10 +7,10 @@ import java.util.Map;
 public enum Note implements Serializable {
 	C("C"), Csharp("C#", "Db"), D("D"), Dsharp("D#", "Eb"), E("E"), F("F"), Fsharp("F#", "Gb"), G("G"), Gsharp("G#", "Ab"), A("A"), Asharp("A#", "Bb"), B("B");
 	
-	private static final Map<String, Note> MAP = new HashMap<String, Note>();
+	private static final Map<String, Note> MAP = new HashMap<>();
 	
-	private String value;
-	private String flatValue;
+	private final String value;
+	private final String flatValue;
 	
 	static {
 		for (Note n : Note.values()) {

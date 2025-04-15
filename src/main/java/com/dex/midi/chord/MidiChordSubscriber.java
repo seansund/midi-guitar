@@ -9,7 +9,7 @@ import java.util.Set;
 
 public class MidiChordSubscriber {
 
-    private Set<StringPitch> stringPitch = new HashSet<StringPitch>(12);
+    private final Set<StringPitch> stringPitch = new HashSet<>(12);
 
     public MidiChordSubscriber(MidiEventObservable mp, ChordEventProducer p) {
         super();

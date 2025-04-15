@@ -2,6 +2,7 @@ package com.dex.midi.model;
 
 import com.dex.midi.util.SimpleLogger;
 import com.dex.midi.util.StringUtil;
+import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,9 +40,9 @@ public enum MusicalKey {
 	
 	private static final String KEY_FORMAT = "%s%s";
 	
-	private static final Map<String, MusicalKey> MAP = new HashMap<String, MusicalKey>();
-	private static final List<MusicalKey> MAJORS = new ArrayList<MusicalKey>(12);
-	private static final List<MusicalKey> MINORS = new ArrayList<MusicalKey>(12);
+	private static final Map<String, MusicalKey> MAP = new HashMap<>();
+	private static final List<MusicalKey> MAJORS = new ArrayList<>(12);
+	private static final List<MusicalKey> MINORS = new ArrayList<>(12);
 	
 	static {
 		for (MusicalKey k : MusicalKey.values()) {
@@ -56,10 +57,11 @@ public enum MusicalKey {
 		}
 	}
 	
-	private Note tonic;
-	private Type type;
-	private Note relative;
-	private boolean sharp;
+	@Getter
+    private final Note tonic;
+	private final Type type;
+	private final Note relative;
+	private final boolean sharp;
 	
 	MusicalKey(Note tonic) {
 		this(tonic, true);
@@ -91,12 +93,8 @@ public enum MusicalKey {
 		
 		return MAP.get(key);
 	}
-	
-	public Note getTonic() {
-		return tonic;
-	}
-	
-	public String toString() {
+
+    public String toString() {
 		return toString(true);
 	}
 	
@@ -107,7 +105,7 @@ public enum MusicalKey {
 	public String toString(boolean includeRelative, boolean sharp) {
 		final String method = "toString";
 		
-		StringBuffer buf = new StringBuffer(20);
+		final StringBuilder buf = new StringBuilder(20);
 		
 		buf.append(tonic.toString(sharp)).append(type.toString());
 		if (includeRelative) {
@@ -139,10 +137,10 @@ public enum MusicalKey {
 		return Type.MAJOR.equals(k.type) ? MAJORS.indexOf(k) : MINORS.indexOf(k);
 	}
 	
-	public static enum Type {
+	public enum Type {
 		MAJOR(StringUtil.EMPTY), MINOR("m");
 		
-		private String display;
+		private final String display;
 		
 		Type(String display) {
 			this.display = display;

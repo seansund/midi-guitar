@@ -1,15 +1,22 @@
 package com.dex.midi.model;
 
 import com.dex.midi.MidiConfig;
+import lombok.Getter;
+import lombok.Setter;
 
+import java.io.Serial;
 import java.io.Serializable;
+import java.util.Objects;
 
+@Setter
 public class GuitarPosition implements Serializable {
+	@Serial
 	private static final long serialVersionUID = 1L;
 	
 	private static final String STRING_FORMAT = "[%d, %d, %s]";
 	
-	private int stringIndex;
+	@Getter
+    private int stringIndex;
 	private int fretIndex;
 	
 	public GuitarPosition() {
@@ -37,26 +44,14 @@ public class GuitarPosition implements Serializable {
 		}
 	}
 
-	public int getStringIndex() {
-		return stringIndex;
-	}
-
-	public void setStringIndex(int stringIndex) {
-		this.stringIndex = stringIndex;
-	}
-
-	public int getFretIndex() {
+    public int getFretIndex() {
 		MidiConfig m = MidiConfig.getInstance();
 		int stringOffset = m.getStringOffset(stringIndex);
 		
 		return validateFretIndex(fretIndex + stringOffset);
 	}
-	
-	public void setFretIndex(int fretIndex) {
-		this.fretIndex = fretIndex;
-	}
-	
-	public int getAdjustedFretIndex() {
+
+    public int getAdjustedFretIndex() {
 		MidiConfig m = MidiConfig.getInstance();
 		int keyOffset = m.getKeyIndex();
 		
@@ -90,17 +85,14 @@ public class GuitarPosition implements Serializable {
 	@Override
 	public int hashCode() {
 		final int prime = 31;
-		int result = 1;
-		result = prime * result + fretIndex;
-		result = prime * result + stringIndex;
-		return result;
+
+		return Objects.hash(prime, fretIndex, stringIndex);
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof GuitarPosition) {
-			GuitarPosition other = (GuitarPosition) obj;
-			if (this == other) {
+		if (obj instanceof GuitarPosition other) {
+            if (this == other) {
 				return true;
 			}
 			if (!getClass().equals(other.getClass())) {
@@ -109,11 +101,8 @@ public class GuitarPosition implements Serializable {
 			if (fretIndex != other.fretIndex) {
 				return false;
 			}
-			if (stringIndex != other.stringIndex) {
-				return false;
-			}
-			return true;
-		}
+            return stringIndex == other.stringIndex;
+        }
 		return false;
 	}
 	

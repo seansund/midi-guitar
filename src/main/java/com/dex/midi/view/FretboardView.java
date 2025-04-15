@@ -5,12 +5,12 @@ import com.dex.midi.util.UniqueItem;
 
 public interface FretboardView extends UniqueItem {
 	
-	public Object getLabel(GuitarPosition fret);
+	Object getLabel(GuitarPosition fret);
 	
-	public FretboardView shift();
+	FretboardView shift();
 	
-	public FretboardView next();
+	FretboardView next();
 	
-	public boolean isShift();
+	boolean isShift();
 	
 }

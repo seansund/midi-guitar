@@ -5,15 +5,15 @@ import java.util.Collection;
 
 public interface FretboardViewEventProducer {
 
-	public void addFretboardViewEventListener(FretboardViewEventListener l);
+	void addFretboardViewEventListener(FretboardViewEventListener l);
 	
-	public void removeFretboardViewEventListener(FretboardViewEventListener l);
+	void removeFretboardViewEventListener(FretboardViewEventListener l);
 	
-	public void mergeProducers(FretboardViewEventProducer that);
+	void mergeProducers(FretboardViewEventProducer that);
 	
-	public Collection<FretboardViewEventListener> getListeners();
+	Collection<FretboardViewEventListener> getListeners();
 	
-	public void fireViewChanged(String viewId);
+	void fireViewChanged(String viewId);
 	
-	public void fireViewFactoryChanged(FretboardViewFactory factory);
+	void fireViewFactoryChanged(FretboardViewFactory factory);
 }

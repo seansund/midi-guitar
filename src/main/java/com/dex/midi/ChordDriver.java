@@ -9,10 +9,11 @@ import java.util.logging.Level;
 
 @Deprecated
 public class ChordDriver extends com.dex.midi.Driver implements ChordEventListener {
+	private MidiEventChordAdapter adapter;
 
 	@Override
 	public void init(MidiEventListenerSource p) {
-		MidiEventChordAdapter adapter = new MidiEventChordAdapter().registerListener(p);
+		adapter = new MidiEventChordAdapter().registerListener(p);
 
 		adapter.addChordEventListener(this);
 	}
@@ -22,6 +23,15 @@ public class ChordDriver extends com.dex.midi.Driver implements ChordEventListen
 		final String method = "chordChange";
 		
 		SimpleLogger.log(Level.INFO, ChordDriver.class, method, "{0}", chords);
+	}
+
+	@Override
+	public void close() {
+		super.close();
+
+		if (adapter != null) {
+			adapter.close();
+		}
 	}
 	
 	public static void main(String[] args) {

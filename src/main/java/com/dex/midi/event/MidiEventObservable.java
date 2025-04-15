@@ -5,11 +5,11 @@ import io.reactivex.rxjava3.core.Observable;
 
 public interface MidiEventObservable {
 
-    public Observable<PitchEvent> getNoteOnObservable();
+    Observable<PitchEvent> getNoteOnObservable();
 
-    public Observable<PitchEvent> getNoteOffObservable();
+    Observable<PitchEvent> getNoteOffObservable();
 
-    public Observable<PitchBendEvent> getPitchBendObservable();
+    Observable<PitchBendEvent> getPitchBendObservable();
 
-    public Observable<GuitarPositions> getGuitarPositionObservable();
+    Observable<GuitarPositions> getGuitarPositionObservable();
 }

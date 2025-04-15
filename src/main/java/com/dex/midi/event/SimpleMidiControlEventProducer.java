@@ -66,9 +66,7 @@ public class SimpleMidiControlEventProducer implements MidiControlEventListenerS
 
     @Override
     public void mergeProducers(MidiControlEventProducer that) {
-        if (that instanceof SimpleMidiControlEventProducer) {
-            final SimpleMidiControlEventProducer thatP = (SimpleMidiControlEventProducer) that;
-
+        if (that instanceof SimpleMidiControlEventProducer thatP) {
             keyChangeSubject.subscribe(thatP.keyChangeSubject);
             stringOffsetSubject.subscribe(thatP.stringOffsetSubject);
         }

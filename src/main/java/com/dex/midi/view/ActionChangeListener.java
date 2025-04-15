@@ -29,7 +29,7 @@ public abstract class ActionChangeListener<T> implements ActionListener {
 	
 	@SuppressWarnings("unchecked")
 	protected T getActionValue(ActionEvent e) {
-		JComboBox b = (JComboBox)e.getSource();
+		JComboBox<T> b = (JComboBox<T>)e.getSource();
 		
 		return (T)b.getSelectedItem();
 	}

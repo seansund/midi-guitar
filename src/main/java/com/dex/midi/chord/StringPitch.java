@@ -1,7 +1,13 @@
 package com.dex.midi.chord;
 
 import com.dex.midi.model.Pitch;
+import lombok.Getter;
+import lombok.Setter;
 
+import java.util.Objects;
+
+@Setter
+@Getter
 public class StringPitch implements Comparable<StringPitch> {
 	
 	private int stringIndex;
@@ -17,59 +23,35 @@ public class StringPitch implements Comparable<StringPitch> {
 		this.stringIndex = stringIndex;
 		this.pitch = pitch;
 	}
-	
-	public int getStringIndex() {
-		return stringIndex;
-	}
 
-	public void setStringIndex(int stringIndex) {
-		this.stringIndex = stringIndex;
-	}
-
-	public Pitch getPitch() {
-		return pitch;
-	}
-
-	public void setPitch(Pitch pitch) {
-		this.pitch = pitch;
-	}
-
-	@Override
+    @Override
 	public int hashCode() {
 		final int prime = 31;
-		int result = 1;
-		result = prime * result + stringIndex;
-		return result;
+		return Objects.hash(prime, stringIndex);
 	}
 	
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof StringPitch) {
-			StringPitch other = (StringPitch) obj;
-			if (this == other) {
+		if (obj instanceof StringPitch other) {
+            if (this == other) {
 				return true;
 			}
 			if (!getClass().equals(other.getClass())) {
 				return false;
 			}
-			if (stringIndex != other.stringIndex) {
-				return false;
-			}
-			return true;
-		}
+            return stringIndex == other.stringIndex;
+        }
 		return false;
 	}
 	
 	@Override
 	public int compareTo(StringPitch o) {
-		int compare = -1;
-		
 		// sort based on the pitch and ignore the string index
 		if (o != null) {
-			compare = this.pitch.compareTo(o.pitch);
+			return this.pitch.compareTo(o.pitch);
 		}
 		
-		return compare;
+		return -1;
 	}
 
 }

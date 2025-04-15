@@ -4,9 +4,9 @@ import java.util.Collection;
 
 public interface MidiControlEventListenable {
 
-    public void addKeyChangeEventListener(MidiControlEventListener l);
+    void addKeyChangeEventListener(MidiControlEventListener l);
 
-    public void removeKeyChangeEventListener(MidiControlEventListener l);
+    void removeKeyChangeEventListener(MidiControlEventListener l);
 
-    public Collection<MidiControlEventListener> getListeners();
+    Collection<MidiControlEventListener> getListeners();
 }

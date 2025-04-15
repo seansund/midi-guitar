@@ -7,18 +7,18 @@ import java.util.stream.Collectors;
 
 public class CompoundDecorator<T> implements Decorator<T> {
 	
-	private Decorator<T> defaultDecorator;
-	private List<? extends Decorator<T>> children;
+	private final Decorator<T> defaultDecorator;
+	private final List<? extends Decorator<T>> children;
 	
 	public CompoundDecorator(Decorator<T> defaultDecorator, Decorator<T>... dArray) {
 		this(defaultDecorator, Arrays.asList(dArray));
 	}
 	
 	public CompoundDecorator(Decorator<T> defaultDecorator, List<? extends Decorator<T>> children) {
-		this.defaultDecorator = defaultDecorator != null ? defaultDecorator : new NoopDecorator<T>();
+		this.defaultDecorator = defaultDecorator != null ? defaultDecorator : new NoopDecorator<>();
 		this.children = children != null
-				? children.stream().filter(d -> Objects.nonNull(d)).collect(Collectors.toList())
-				: Arrays.asList();
+				? children.stream().filter(Objects::nonNull).collect(Collectors.toList())
+				: List.of();
 	}
 
 	@Override
@@ -31,6 +31,5 @@ public class CompoundDecorator<T> implements Decorator<T> {
 
 class NoopDecorator<T> implements Decorator<T> {
 	public void decorate(T d) {
-		return;
 	}
 }

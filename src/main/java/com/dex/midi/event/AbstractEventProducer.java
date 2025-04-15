@@ -6,7 +6,7 @@ import java.util.List;
 
 public abstract class AbstractEventProducer<T> {
 	
-	private List<T> listeners = new ArrayList<T>(5);
+	private final List<T> listeners = new ArrayList<>(5);
 	
 	protected void addListener(T l) {
 		if (l != null && !listeners.contains(l)) {

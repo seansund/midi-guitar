@@ -1,9 +1,13 @@
 package com.dex.midi.event;
 
 import com.dex.midi.model.Pitch;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.sound.midi.ShortMessage;
 
+@Getter
+@Setter
 public class PitchBendEvent extends MidiEvent<ShortMessage> {
 	
 	private static final String STRING_FORMAT = "[PitchBend(%s): %s-%s, %f, %f]";
@@ -34,55 +38,18 @@ public class PitchBendEvent extends MidiEvent<ShortMessage> {
 		
 		// TODO determine resulting bend note based on stdDev
 	}
-	
-	public double getStdDeviation() {
-		return stdDeviation;
-	}
 
-	public void setStdDeviation(double stdDeviation) {
-		this.stdDeviation = stdDeviation;
-	}
-
-	public double getSlope() {
-		return slope;
-	}
-
-	public void setSlope(double slope) {
-		this.slope = slope;
-	}
-
-	public BendType getType() {
-		return type;
-	}
-
-	public void setType(BendType type) {
-		this.type = type;
-	}
-
-	public Pitch getBasePitch() {
-		return basePitch;
-	}
-
-	public void setBaseNote(Pitch basePitch) {
+    public void setBaseNote(Pitch basePitch) {
 		this.basePitch = basePitch;
 	}
 
-	public Pitch getBendPitch() {
-		return bendPitch;
-	}
-
-	public void setBendPitch(Pitch bendPitch) {
-		this.bendPitch = bendPitch;
-	}
-	
 	public int getBendAmount() {
-		int amount = 0;
-		
+
 		if (basePitch != null) {
-			amount = basePitch.distance(bendPitch);
+			return basePitch.distance(bendPitch);
 		}
 		
-		return amount;
+		return 0;
 	}
 	
 	public String toString() {

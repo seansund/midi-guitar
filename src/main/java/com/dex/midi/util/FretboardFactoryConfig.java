@@ -11,15 +11,15 @@ public abstract class FretboardFactoryConfig<T extends UniqueItem> {
 	public static final String KEY_DECORATOR = "decorator";
 	public static final String KEY_TYPE = "type";
 	
-	private Map<String, T> map = new LinkedHashMap<String, T>(20);
-	private T defaultItem = null;
+	private final Map<String, T> map = new LinkedHashMap<>(20);
+	private T defaultItem;
 	
 	protected FretboardFactoryConfig(String configFile) {
 		super();
 		
 		try {
 			List<T> l = buildChildren(configFile);
-			defaultItem = l.get(0);
+			defaultItem = l.getFirst();
 			
 			for (T v : l) {
 				map.put(v.getId(), v);
@@ -36,10 +36,10 @@ public abstract class FretboardFactoryConfig<T extends UniqueItem> {
 		
 		HierarchicalHashMap map = HierarchicalHashMap.load(configFile, this.getClass());
 		
-		List<Object> keys = new ArrayList<Object>(map.keySet());
-		Collections.sort(keys, new StringComparator());
+		List<Object> keys = new ArrayList<>(map.keySet());
+		keys.sort(new StringComparator());
 		
-		List<T> l = new ArrayList<T>(keys.size());
+		List<T> l = new ArrayList<>(keys.size());
 		for (Object key : keys) {
 			@SuppressWarnings("unchecked")
 			Map<Object, Object> value = (Map<Object, Object>)map.get(key);

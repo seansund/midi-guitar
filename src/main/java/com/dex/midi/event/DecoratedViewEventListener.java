@@ -4,5 +4,5 @@ import com.dex.midi.view.DecoratedView;
 
 public interface DecoratedViewEventListener<T> {
 
-	public void decoratedViewChanged(DecoratedView<T> v);
+	void decoratedViewChanged(DecoratedView<T> v);
 }

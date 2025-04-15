@@ -4,5 +4,5 @@ import com.dex.midi.model.GuitarPosition;
 
 public interface EditableFretboardView extends FretboardView {
 
-	public void setLabel(GuitarPosition fret, Object label);
+	void setLabel(GuitarPosition fret, Object label);
 }

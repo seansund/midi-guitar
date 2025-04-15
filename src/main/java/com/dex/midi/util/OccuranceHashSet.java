@@ -1,14 +1,18 @@
 package com.dex.midi.util;
 
+import lombok.Getter;
+
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class OccuranceHashSet<E> implements Set<E> {
 
-	private Map<E, Occurance<E>> map = new HashMap<E, Occurance<E>>();
+	private Map<E, Occurance<E>> map = new HashMap<>();
 	
-	public static class Occurance<T> {
+	@Getter
+    public static class Occurance<T> {
 		
-		private T value;
+		private final T value;
 		private int count = 1;
 		
 		public Occurance(T value) {
@@ -22,21 +26,12 @@ public class OccuranceHashSet<E> implements Set<E> {
 		public int subtract() {
 			return --count;
 		}
-		
-		public T getValue() {
-			return value;
-		}
-		
-		public int getCount() {
-			return count;
-		}
 
-		@Override
+        @Override
 		public int hashCode() {
 			final int prime = 31;
-			int result = 1;
-			result = prime * result + ((value == null) ? 0 : value.hashCode());
-			return result;
+
+			return Objects.hash(prime, value);
 		}
 
 		@Override
@@ -48,28 +43,16 @@ public class OccuranceHashSet<E> implements Set<E> {
 				return false;
 			}
 			
-			if (obj instanceof Occurance) {
-				@SuppressWarnings("rawtypes")
-				Occurance other = (Occurance) obj;
-				if (value == null) {
-					if (other.value != null) {
-						return false;
-					}
-				} else if (!value.equals(other.value)) {
-					return false;
-				}
+			if (obj instanceof @SuppressWarnings("rawtypes") Occurance other) {
+                if (value == null) {
+                    return other.value == null;
+				} else return value.equals(other.value);
 			} else {
 				if (value == null) {
-					if (obj != null) {
-						return false;
-					}
-				} else if (!value.equals(obj)) {
-					return false;
-				}
+                    return false;
+				} else return value.equals(obj);
 			}
-			
-			return true;
-		}
+        }
 		
 		
 	}
@@ -79,7 +62,7 @@ public class OccuranceHashSet<E> implements Set<E> {
 		Occurance<E> o = map.get(key);
 		
 		if (o == null) {
-			map.put(key, new Occurance<E>(key));
+			map.put(key, new Occurance<>(key));
 		} else {
 			o.add();
 		}
@@ -108,18 +91,13 @@ public class OccuranceHashSet<E> implements Set<E> {
 	}
 
 	@Override
-	public boolean containsAll(Collection<?> keys) {
-		boolean result = true;
-		
+	public boolean containsAll(final Collection<?> keys) {
+
 		if (keys.isEmpty()) {
-			result = false;
+			return false;
 		} else {
-			for (Object key : keys) {
-				result &= this.contains(key);
-			}
+			return keys.stream().allMatch(this::contains);
 		}
-		
-		return result;
 	}
 
 	@Override
@@ -134,8 +112,7 @@ public class OccuranceHashSet<E> implements Set<E> {
 
 	@Override
 	public boolean remove(Object key) {
-		boolean result = false;
-		
+
 		Occurance<E> o = map.get(key);
 		if (o != null) {
 			o.subtract();
@@ -144,33 +121,25 @@ public class OccuranceHashSet<E> implements Set<E> {
 				map.remove(key);
 			}
 			
-			result = true;
+			return true;
 		}
 		
-		return result;
+		return false;
 	}
 
 	@Override
-	public boolean removeAll(Collection<?> keys) {
-		boolean result = true;
-		
-		for (Object key : keys) {
-			result &= this.remove(key);
-		}
-		
-		return result;
+	public boolean removeAll(Collection<?> keys) {boolean result = true;
+		return keys.stream().allMatch(this::remove);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public boolean retainAll(Collection<?> keys) {
-		Map<E, Occurance<E>> temp = new HashMap<E, Occurance<E>>();
-		
-		for (Object key : keys) {
-			temp.put((E)key, map.get(key));
-		}
-		map = temp;
-		
+
+		map = map.entrySet().stream()
+				.filter(e -> keys.contains(e.getKey()))
+				.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+
 		return false;
 	}
 
@@ -189,14 +158,13 @@ public class OccuranceHashSet<E> implements Set<E> {
 		return map.keySet().toArray(a);
 	}
 	
-	public int count(E key) {
-		Occurance<E> o = map.get(key);
+	public int count(final E key) {
+		final Occurance<E> o = map.get(key);
 		
-		int count = 0;
 		if (o != null) {
-			count = o.getCount();
+			return o.getCount();
 		}
 		
-		return count;
+		return 0;
 	}
 }

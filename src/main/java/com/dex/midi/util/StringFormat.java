@@ -21,10 +21,8 @@ public class StringFormat {
 			if (leftAlign) {
 				result.append(s);
 			}
-			
-			for (int i = s.length(); i < length; i++) {
-				result.append(StringUtil.SPACE);
-			}
+
+            result.append(StringUtil.SPACE.repeat(length - s.length()));
 			
 			if (!leftAlign) {
 				result.append(s);
@@ -32,7 +30,7 @@ public class StringFormat {
 		} else if (s.length() == length) {
 			result.append(s);
 		} else {
-			result.append(s.substring(0, length));
+			result.append(s, 0, length);
 		}
 		
 		return result.toString();

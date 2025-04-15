@@ -17,11 +17,11 @@ public class MidiGuitarReceiver implements Receiver {
 	// 01111111
 	private static final int MASK = 0x007f;
 	
-	private MidiEventProducer p = null;
+	private final MidiEventProducer p;
 	
 	// TODO get from configuration
-	private MidiConfig config = null;
-	private StringStateGroup stringStateGroup = null;
+	private final MidiConfig config;
+	private final StringStateGroup stringStateGroup;
 	
 	public MidiGuitarReceiver() {
 		this(MidiConfig.getInstance());
@@ -36,11 +36,17 @@ public class MidiGuitarReceiver implements Receiver {
 	
 	@Override
 	public void close() {
-		p.close();
-	}
+        try {
+            p.close();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 	
 	@Override
 	public void send(MidiMessage msg, long tick) {
+		SimpleLogger.log(Level.FINE, this, "send", "MidiMessage: {0}", msg);
+
 		if (msg instanceof ShortMessage) {
 			handleShortMidiMessage((ShortMessage)msg, tick);
 		} else if (msg instanceof SysexMessage) {
@@ -102,9 +108,7 @@ public class MidiGuitarReceiver implements Receiver {
 	}
 	
 	protected int getStringIndex(int channel) {
-		int stringIndex = channel - config.getChannelOffset();
-		
-		return stringIndex;
+		return channel - config.getChannelOffset();
 	}
 	
 	protected int getFretIndex(int stringIndex, int pitch) {
@@ -150,9 +154,7 @@ public class MidiGuitarReceiver implements Receiver {
 		// not sure if the MASK is necessary here but the information
 		// is in the first 7 bits
 		// MSB needs to be shifted 7 bits to create the 14 bit value
-		int pitchBend = ((msb & MASK) << 7) | (lsb & MASK);
-		
-		return pitchBend;
+		return ((msb & MASK) << 7) | (lsb & MASK);
 	}
 	
 	protected void handleSysexMidiMessage(SysexMessage msg, long tick) {

@@ -6,7 +6,6 @@ import com.dex.midi.model.GuitarPositions;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.disposables.Disposable;
 
-import java.util.Collection;
 import java.util.List;
 
 public class MidiEventChordAdapter implements MidiEventListener, ChordEventObservableSource, ChordEventListenerSource {

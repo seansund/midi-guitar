@@ -1,14 +1,13 @@
 package com.dex.midi;
 
-import com.dex.midi.event.MidiEventListenerSource;
 import com.dex.midi.event.MidiEventException;
+import com.dex.midi.event.MidiEventListenerSource;
 import com.dex.midi.event.MidiEventObservableSource;
 import com.dex.midi.event.SimpleMidiEventProducer;
 import com.dex.midi.handler.PrintMidiEventListener;
 import com.dex.midi.util.SimpleLogger;
 
 import javax.annotation.Nonnull;
-import javax.annotation.RegEx;
 import javax.sound.midi.MidiSystem;
 import javax.sound.midi.MidiUnavailableException;
 import javax.sound.midi.Transmitter;
@@ -62,7 +61,7 @@ public class Driver implements MidiDriver {
 		return receiver;
 	}
 
-	protected void init(MidiEventListenerSource p) throws MidiEventException {
+	protected void init(MidiEventListenerSource p) {
 		// nothing to do
 	}
 	
@@ -83,24 +82,16 @@ public class Driver implements MidiDriver {
 	@Override
 	public void run() {
 		run(() -> {
-			BufferedReader in = null;
-			try {
-				in = new BufferedReader(new InputStreamReader(System.in));
+            try (BufferedReader in = new BufferedReader(new InputStreamReader(System.in))) {
 
-				for (String line = in.readLine(); line != null; line = in.readLine()) {
-					if ("EXIT".equalsIgnoreCase(line)) {
-						throw new RuntimeException("Exit");
-					}
-				}
-			} catch (IOException e) {
-				throw new RuntimeException("Error reading stream", e);
-			} finally {
-				if (in != null) {
-					try {
-						in.close();
-					} catch (Throwable ignore) {}
-				}
-			}
+                for (String line = in.readLine(); line != null; line = in.readLine()) {
+                    if ("EXIT".equalsIgnoreCase(line)) {
+                        throw new RuntimeException("Exit");
+                    }
+                }
+            } catch (IOException e) {
+                throw new RuntimeException("Error reading stream", e);
+            }
 		});
 	}
 
@@ -143,7 +134,9 @@ public class Driver implements MidiDriver {
 	}
 	
 	public static void main(String[] args) {
-		new Driver().run();
+		try (Driver d = new Driver()) {
+			d.run();
+		}
 
 		System.exit(0);
 	}

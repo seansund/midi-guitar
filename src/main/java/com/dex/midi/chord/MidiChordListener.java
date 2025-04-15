@@ -11,9 +11,9 @@ import java.util.Set;
 
 public class MidiChordListener implements MidiEventListener {
 	
-	private Set<StringPitch> stringPitch = new HashSet<StringPitch>(12);
+	private final Set<StringPitch> stringPitch = new HashSet<>(12);
 	
-	private ChordEventProducer p = null;
+	final private ChordEventProducer p;
 	
 	public MidiChordListener(ChordEventProducer p) {
 		super();

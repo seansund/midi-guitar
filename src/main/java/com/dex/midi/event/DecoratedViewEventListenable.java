@@ -4,9 +4,9 @@ import java.util.Collection;
 
 public interface DecoratedViewEventListenable<T> {
 
-    public void addDecoratedViewEventListener(DecoratedViewEventListener<T> l);
+    void addDecoratedViewEventListener(DecoratedViewEventListener<T> l);
 
-    public void removeDecoratedViewEventListener(DecoratedViewEventListener<T> l);
+    void removeDecoratedViewEventListener(DecoratedViewEventListener<T> l);
 
-    public Collection<DecoratedViewEventListener<T>> getListeners();
+    Collection<DecoratedViewEventListener<T>> getListeners();
 }
